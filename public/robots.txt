@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+User-agent: GPTBot
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+Disallow: /*.json$
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+Disallow: /*.json$
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+Disallow: /*.json$
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+Disallow: /*.json$
+
+Sitemap: https://www.rixven.com/sitemap.xml
+Host: https://www.rixven.com

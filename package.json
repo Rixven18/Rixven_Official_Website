@@ -1,0 +1,50 @@
+{
+  "name": "rixven-web",
+  "version": "1.0.0",
+  "description": "RIXVEN — Global Technology Conglomerate. Official web platform.",
+  "private": true,
+  "scripts": {
+    "dev":              "next dev",
+    "build":            "next build",
+    "start":            "next start",
+    "lint":             "next lint",
+    "type-check":       "tsc --noEmit",
+    "preview":          "next build && next start",
+    "cf:build":         "npx @cloudflare/next-on-pages",
+    "cf:dev":           "wrangler pages dev .vercel/output/static --d1=DB",
+    "cf:deploy":        "wrangler pages deploy .vercel/output/static",
+    "db:migrate":       "wrangler d1 execute rixven-db --file=./migrations/001_schema.sql",
+    "db:migrate:local": "wrangler d1 execute rixven-db --local --file=./migrations/001_schema.sql",
+    "db:studio":        "wrangler d1 studio rixven-db",
+    "analyze":          "ANALYZE=true next build"
+  },
+  "dependencies": {
+    "next":                          "^15.0.0",
+    "react":                         "^19.0.0",
+    "react-dom":                     "^19.0.0",
+    "framer-motion":                 "^12.0.0",
+    "lucide-react":                  "^0.400.0",
+    "@cloudflare/next-on-pages":     "^1.13.0"
+  },
+  "devDependencies": {
+    "typescript":                    "^5.5.0",
+    "@types/node":                   "^22.0.0",
+    "@types/react":                  "^19.0.0",
+    "@types/react-dom":              "^19.0.0",
+    "tailwindcss":                   "^3.4.0",
+    "postcss":                       "^8.4.0",
+    "autoprefixer":                  "^10.4.0",
+    "@tailwindcss/typography":       "^0.5.14",
+    "@tailwindcss/forms":            "^0.5.7",
+    "@tailwindcss/container-queries":"^0.1.1",
+    "@svgr/webpack":                 "^8.1.0",
+    "@cloudflare/workers-types":     "^4.20250101.0",
+    "wrangler":                      "^3.80.0",
+    "eslint":                        "^9.0.0",
+    "eslint-config-next":            "^15.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm":  ">=10.0.0"
+  }
+}

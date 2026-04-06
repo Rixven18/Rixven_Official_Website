@@ -1,0 +1,558 @@
+/* =============================================================================
+   RIXVEN — app/globals.css
+   Global stylesheet: CSS custom properties, base resets, and utility classes.
+   Tailwind CSS directives + RIXVEN design token overrides.
+   ============================================================================= */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   DESIGN TOKENS — CSS Custom Properties
+   All brand colors, shadows, and motion values as CSS variables.
+   Use these in component-level CSS when Tailwind utility classes fall short.
+   --------------------------------------------------------------------------- */
+:root {
+  /* === BRAND COLORS === */
+  --color-blue:          #0887C9;   /* Electric Blue — exact from rixven.svg */
+  --color-blue-hover:    #0772AA;
+  --color-blue-light:    #4BA7D2;   /* Secondary blue from SVG */
+  --color-gold:          #F5B543;   /* Golden Yellow — exact from rixven.svg */
+  --color-gold-light:    #F9D577;
+
+  /* === NEUTRAL PALETTE === */
+  --color-white:         #FFFFFF;
+  --color-slate-white:   #F8FAFC;
+  --color-mist:          #F1F5F9;
+  --color-pearl:         #E2E8F0;
+  --color-charcoal:      #0F172A;
+  --color-charcoal-700:  #334155;
+  --color-charcoal-500:  #64748B;
+  --color-charcoal-400:  #94A3B8;
+  --color-charcoal-300:  #CBD5E1;
+
+  /* === TYPOGRAPHY === */
+  --font-display:        var(--font-syne), 'Syne', sans-serif;
+  --font-body:           var(--font-instrument-sans), 'Instrument Sans', sans-serif;
+  --font-mono:           var(--font-geist-mono), 'Geist Mono', monospace;
+
+  /* === NAVBAR === */
+  --navbar-height:       72px;
+
+  /* === SHADOWS === */
+  --shadow-card:         0 1px 3px rgba(15,23,42,0.04), 0 1px 2px -1px rgba(15,23,42,0.04);
+  --shadow-overlay:      0 0 0 1px rgba(15,23,42,0.05), 0 8px 32px rgba(15,23,42,0.08);
+  --shadow-blue-glow:    0 0 0 1px rgba(8,135,201,0.15), 0 4px 24px rgba(8,135,201,0.12);
+  --shadow-gold-glow:    0 0 0 1px rgba(245,181,67,0.20), 0 4px 24px rgba(245,181,67,0.14);
+
+  /* === MOTION === */
+  --ease-out-expo:       cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-expo:    cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-spring:         cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:       150ms;
+  --duration-base:       250ms;
+  --duration-slow:       400ms;
+  --duration-slower:     600ms;
+  --duration-slowest:    1000ms;
+
+  /* === GLASSMORPHISM === */
+  --glass-bg:            rgba(255, 255, 255, 0.80);
+  --glass-border:        rgba(226, 232, 240, 0.80);
+  --glass-blur:          20px;
+  --glass-saturate:      180%;
+}
+
+/* ---------------------------------------------------------------------------
+   BASE LAYER — Element-level resets & defaults
+   --------------------------------------------------------------------------- */
+@layer base {
+  /* Smooth box-sizing everywhere */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Root scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  /* Body defaults */
+  body {
+  background-color: #ffffff;
+  color: #0A0F1A;
+    font-family:     var(--font-body);
+    background-color: var(--color-white);
+    color:           var(--color-charcoal);
+    line-height:     1.625;
+    min-height:      100vh;
+    overflow-x:      hidden;
+  }
+
+  /* Heading defaults — Syne display font */
+  h1, h2, h3, h4, h5, h6 {
+    font-family:  var(--font-display);
+    font-weight:  700;
+    line-height:  1.1;
+    letter-spacing: -0.025em;
+    color:        var(--color-charcoal);
+  }
+
+  /* Anchor defaults */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Remove default button styles */
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+
+  /* Focus ring — accessible & on-brand */
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Code blocks */
+  code, pre, kbd, samp {
+    font-family: var(--font-mono);
+    font-size:   0.875em;
+  }
+
+  /* Image defaults */
+  img, video, svg {
+    display:   block;
+    max-width: 100%;
+  }
+
+  /* List resets */
+  ul, ol {
+    list-style: none;
+    padding:    0;
+    margin:     0;
+  }
+
+  /* Table defaults */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  /* Horizontal rule */
+  hr {
+    border:     none;
+    border-top: 1px solid var(--color-pearl);
+    margin:     0;
+  }
+
+  /* Selection colors */
+  ::selection {
+    background-color: rgba(8, 135, 201, 0.12);
+    color:            var(--color-charcoal);
+  }
+
+  /* Scrollbar styling (Webkit) */
+  ::-webkit-scrollbar {
+    width:  6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-mist);
+  }
+  ::-webkit-scrollbar-thumb {
+    background:    var(--color-charcoal-300);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-500);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   COMPONENT LAYER — Reusable UI primitives
+   --------------------------------------------------------------------------- */
+@layer components {
+  /* === GLASSMORPHISM — Used for Navbar and floating panels === */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  /* Stronger glass for cards */
+  .glass-card {
+    background: rgba(248, 250, 252, 0.90);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid rgba(226, 232, 240, 0.70);
+  }
+
+  /* === GRADIENT TEXT — For selective headline accents === */
+  .text-gradient-blue {
+    background-image: linear-gradient(135deg, var(--color-blue) 0%, var(--color-blue-light) 100%);
+    background-clip:  text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-gradient-gold {
+    background-image: linear-gradient(135deg, var(--color-gold) 0%, #F9D577 100%);
+    background-clip:  text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* === CTA BUTTON VARIANTS === */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-6 py-3 rounded-lg;
+    @apply bg-rixven-blue text-white;
+    @apply text-sm font-semibold font-sans;
+    @apply shadow-blue-glow;
+    @apply transition-all duration-250;
+    @apply hover:bg-rixven-blue-600 hover:shadow-blue-glow-lg;
+    @apply focus-visible:ring-2 focus-visible:ring-rixven-blue focus-visible:ring-offset-2;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-6 py-3 rounded-lg;
+    @apply bg-transparent text-rixven-charcoal;
+    @apply text-sm font-semibold font-sans;
+    @apply border border-rixven-white-pearl;
+    @apply transition-all duration-250;
+    @apply hover:bg-rixven-white-mist hover:border-rixven-charcoal-300;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply px-4 py-2 rounded-md;
+    @apply text-rixven-charcoal-600 text-sm font-medium font-sans;
+    @apply transition-all duration-150;
+    @apply hover:bg-rixven-white-mist hover:text-rixven-charcoal;
+  }
+
+  /* === SECTION CONTAINER === */
+  .section-container {
+    @apply max-w-content mx-auto px-6 lg:px-8;
+  }
+
+  /* === BADGE VARIANTS === */
+  .badge {
+    @apply inline-flex items-center gap-1.5;
+    @apply px-2.5 py-0.5 rounded-full;
+    @apply text-xs font-medium;
+    @apply bg-rixven-white-mist border border-rixven-white-pearl;
+    @apply text-rixven-charcoal-600;
+  }
+
+  .badge-blue {
+    @apply bg-rixven-blue-50 border-rixven-blue-100 text-rixven-blue-700;
+  }
+
+  .badge-gold {
+    background-color: rgba(245, 181, 67, 0.10);
+    border-color:     rgba(245, 181, 67, 0.20);
+    color:            #8B6508;
+  }
+
+  /* === CARD BASE === */
+  .card {
+    @apply bg-white border border-rixven-white-pearl rounded-xl;
+    @apply transition-all duration-350;
+    @apply hover:border-rixven-charcoal-300 hover:shadow-card-lg;
+  }
+
+  .card-slate {
+    @apply bg-rixven-white-slate border border-rixven-white-pearl rounded-xl;
+    @apply transition-all duration-350;
+    @apply hover:border-rixven-charcoal-300 hover:shadow-card-lg;
+  }
+
+  /* === SECTION LABEL === */
+  .section-label {
+    @apply text-xs font-semibold tracking-ultra text-rixven-blue uppercase;
+  }
+
+  /* === DIVIDER WITH LABEL === */
+  .divider-label {
+    @apply flex items-center gap-4;
+  }
+  .divider-label::before,
+  .divider-label::after {
+    content: '';
+    @apply flex-1 h-px bg-rixven-white-pearl;
+  }
+
+  /* === METRIC CALLOUT === */
+  .metric-callout {
+    @apply inline-flex items-center gap-4;
+    @apply px-5 py-4 rounded-xl;
+    @apply bg-rixven-white-slate border border-rixven-white-pearl;
+  }
+
+  /* === CODE BLOCK === */
+  .code-block {
+    @apply font-mono text-sm;
+    @apply bg-rixven-charcoal text-white;
+    @apply rounded-xl p-6;
+    @apply overflow-x-auto;
+  }
+
+  /* === HIGHLIGHT LINE (code annotations) === */
+  .code-highlight {
+    @apply bg-rixven-blue-950 border-l-2 border-rixven-blue px-6 -mx-6;
+  }
+
+  /* === SPEC TABLE === */
+  .spec-table {
+    @apply w-full text-sm font-sans;
+  }
+  .spec-table th {
+    @apply text-left px-6 py-3 text-xs font-semibold text-rixven-charcoal-400 uppercase tracking-wider;
+    @apply bg-rixven-white-mist border-b border-rixven-white-pearl;
+  }
+  .spec-table td {
+    @apply px-6 py-4 border-b border-rixven-white-pearl;
+    @apply text-rixven-charcoal-600;
+  }
+  .spec-table tr:last-child td {
+    @apply border-b-0;
+  }
+  .spec-table td.highlight {
+    @apply font-semibold text-rixven-blue;
+  }
+
+  /* === KERNEL LAYER STACK === */
+  .kernel-layer {
+    @apply flex items-center gap-4 px-4 py-3 rounded-lg border;
+    @apply transition-all duration-300;
+    @apply cursor-default;
+  }
+
+  /* === NAVBAR LINK === */
+  .nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium;
+    @apply text-rixven-charcoal-600 transition-colors duration-150;
+    @apply hover:text-rixven-charcoal hover:bg-rixven-white-mist;
+  }
+
+  .nav-link-active {
+    @apply text-rixven-charcoal bg-rixven-white-mist;
+  }
+
+  /* === FOOTER LINK === */
+  .footer-link {
+    @apply text-sm text-rixven-charcoal-400 font-sans;
+    @apply transition-colors duration-150;
+    @apply hover:text-rixven-charcoal;
+  }
+
+  /* === PROSE OVERRIDES — for documentation pages === */
+  .prose-rixven {
+    @apply prose prose-slate max-w-none;
+    @apply prose-headings:font-display prose-headings:tracking-tight;
+    @apply prose-a:text-rixven-blue prose-a:no-underline hover:prose-a:underline;
+    @apply prose-code:font-mono prose-code:text-rixven-blue prose-code:bg-rixven-blue-50;
+    @apply prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded;
+    @apply prose-pre:bg-rixven-charcoal prose-pre:rounded-xl;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   UTILITY LAYER — One-off utility extensions
+   --------------------------------------------------------------------------- */
+@layer utilities {
+  /* === BACKGROUND GRID — Technical precision aesthetic === */
+  .bg-grid-blue {
+    background-image:
+      linear-gradient(rgba(8, 135, 201, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(8, 135, 201, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .bg-grid-charcoal {
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* === RADIAL GLOW BACKGROUNDS === */
+  .bg-glow-blue {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(8, 135, 201, 0.06) 0%, transparent 60%);
+  }
+
+  .bg-glow-gold {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245, 181, 67, 0.06) 0%, transparent 60%);
+  }
+
+  /* === ANIMATED GRADIENT BORDER === */
+  .border-gradient-blue {
+    position: relative;
+  }
+  .border-gradient-blue::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(8, 135, 201, 0.3), transparent, rgba(8, 135, 201, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* === TEXT BALANCE — For headlines === */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* === NO SCROLLBAR === */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* === FONT NUMERIC === */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* === CONTENT VISIBILITY — Performance optimization === */
+  .content-auto {
+    content-visibility: auto;
+  }
+
+  /* === SAFE BOTTOM PADDING — For mobile home bar === */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   ANIMATIONS — Additional keyframes not defined in Tailwind config
+   --------------------------------------------------------------------------- */
+
+/* Gradient shimmer — for skeleton loading states */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* Gentle float — for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Blink — for cursor effects in terminal displays */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Draw — for SVG path animations */
+@keyframes draw {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Reveal from bottom — base animation for sections */
+@keyframes revealUp {
+  from {
+    opacity:   0;
+    transform: translateY(24px);
+    filter:    blur(4px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+    filter:    blur(0);
+  }
+}
+
+/* Utility class for CSS-only reveal animation */
+.animate-reveal-up {
+  animation: revealUp 0.8s var(--ease-out-expo) both;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Stagger delay utilities for reveal animations */
+.animation-delay-100  { animation-delay:  100ms; }
+.animation-delay-200  { animation-delay:  200ms; }
+.animation-delay-300  { animation-delay:  300ms; }
+.animation-delay-400  { animation-delay:  400ms; }
+.animation-delay-500  { animation-delay:  500ms; }
+.animation-delay-600  { animation-delay:  600ms; }
+.animation-delay-800  { animation-delay:  800ms; }
+.animation-delay-1000 { animation-delay: 1000ms; }
+
+/* ---------------------------------------------------------------------------
+   PRINT STYLES
+   --------------------------------------------------------------------------- */
+@media print {
+  /* Hide navigation, footer, and interactive elements */
+  header, nav, footer, .no-print {
+    display: none !important;
+  }
+  /* Ensure text prints in black */
+  body {
+  background-color: #ffffff;
+  color: #0A0F1A;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  /* Expand links */
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+    opacity: 0.6;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   REDUCED MOTION — Accessibility
+   Respects prefers-reduced-motion OS setting.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:   0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:  0.01ms !important;
+    scroll-behavior:      auto !important;
+  }
+}
