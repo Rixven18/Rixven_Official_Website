@@ -41,7 +41,7 @@ export default function ContactPage() {
         }),
       });
 
-      const data = await response.json() as { success?: boolean };
+      const data = await response.json() as { success?: boolean; error?: string };
 
       if (data.success) {
         setSubmitted(true);
