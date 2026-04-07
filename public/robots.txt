@@ -1,37 +1,62 @@
+# rixven.com - Global AI & Search Engine Optimization
+# Final Advanced Version
+
 User-agent: *
 Allow: /
 Disallow: /_next/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
+Disallow: /tmp/
+Disallow: /search
 Disallow: /*.json$
+Disallow: /*.php$
+Disallow: /*.xml$
+Crawl-delay: 1
 
+# --- AI & LLM AGENTS (Optimized for Discovery) ---
+
+# OpenAI: For ChatGPT and SearchGPT
 User-agent: GPTBot
+User-agent: ChatGPT-User
 Allow: /
 Disallow: /_next/
 Disallow: /api/
-Disallow: /*.json$
 
+# Google AI: For Gemini and AI Overviews
 User-agent: Google-Extended
 Allow: /
 Disallow: /_next/
-Disallow: /api/
-Disallow: /*.json$
 
-User-agent: CCBot
-Disallow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-Disallow: /_next/
-Disallow: /api/
-Disallow: /*.json$
-
+# Anthropic: For Claude
 User-agent: anthropic-ai
 Allow: /
 Disallow: /_next/
-Disallow: /api/
-Disallow: /*.json$
 
-Sitemap: https://www.rixven.com/sitemap.xml
-Host: https://www.rixven.com
+# Perplexity: For real-time AI Answer Engine
+User-agent: PerplexityBot
+Allow: /
+
+# Apple Intelligence: For Siri and Apple Bot
+User-agent: Applebot-Extended
+Allow: /
+
+# --- AGGRESSIVE / NOISY BOTS (Security & Resource Savings) ---
+
+# Block Common Crawl (Prevents unauthorized training data scraping)
+User-agent: CCBot
+Disallow: /
+
+# Block ByteDance/TikTok crawler (Often very aggressive)
+User-agent: Bytespider
+Disallow: /
+
+# Block Yandex & Baidu (Unless you target Russia/China specifically)
+User-agent: Yandex
+User-agent: Baidu
+Disallow: /
+
+# --- SITEMAP & CANONICAL HOST ---
+
+Sitemap: https://rixven.com/sitemap.xml
+Host: https://rixven.com
